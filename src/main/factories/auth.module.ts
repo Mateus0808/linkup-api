@@ -12,6 +12,10 @@ import { AccessTokenStrategy } from 'src/infra/auth/strategies/access-token.stra
 import { RefreshTokenStrategy } from 'src/infra/auth/strategies/refresh-token.strategy';
 import { CreateRefreshTokenService } from 'src/app/use-cases/refresh-token/create-refresh-token.service';
 import { UserRepositoryModule } from 'src/infra/database/config/user-database.module';
+import { ISignOutServiceToken } from 'src/app/interfaces/auth/sign-out-service.interface';
+import { SignOutService } from 'src/app/use-cases/auth/sign-out.service';
+import { IRevokeRefreshTokenServiceToken } from 'src/app/interfaces/refresh-token/revoke-refresh-token-service.interface';
+import { RevokeRefreshTokenService } from 'src/app/use-cases/refresh-token/revoke-refresh-token.service';
 
 @Module({
   imports: [
@@ -28,8 +32,16 @@ import { UserRepositoryModule } from 'src/infra/database/config/user-database.mo
       useClass: SignInService
     },
     {
+      provide: ISignOutServiceToken,
+      useClass: SignOutService
+    },
+    {
       provide: ICreateRefreshTokenServiceToken,
       useClass: CreateRefreshTokenService
+    },
+    {
+      provide: IRevokeRefreshTokenServiceToken,
+      useClass: RevokeRefreshTokenService
     },
     AccessTokenStrategy, 
     RefreshTokenStrategy

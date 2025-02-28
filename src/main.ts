@@ -3,6 +3,8 @@ import { AppModule } from './main/app.module';
 import { AlreadyExistsErrorFilter } from './app/errors/already-exists-error/already-exists-error.filter';
 import { BadResquestErrorFilter } from './app/errors/bad-request-error/bad-request-error.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { UnauthorizedErrorFilter } from './app/errors/unauthorized-error/unauthorized-error.filter';
+import { NotFoundErrorFilter } from './app/errors/not-found-error/not-found-error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,7 +21,9 @@ async function bootstrap() {
 
   app.useGlobalFilters(
     new AlreadyExistsErrorFilter(),
-    new BadResquestErrorFilter()
+    new BadResquestErrorFilter(),
+    new UnauthorizedErrorFilter(),
+    new NotFoundErrorFilter()
   );
 
   await app.listen(3000);
