@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { UserPageOptionsDto } from "src/app/dtos/user/user-page-options.dto";
-import { UserResponse } from "src/app/interfaces/user/get-user-by-param-service.interface";
+import { GetUserResponse } from "src/app/interfaces/user/get-user-by-param-service.interface";
 import { IFindUsersWithPaginationService } from "src/app/interfaces/user/list-users-service.interface";
 import { mapToUserResponseDto } from "src/app/mappers/user.mapper";
 import { IFindAllUsersRepository, IFindAllUsersRepositoryToken } from "src/app/ports/repositories/user/find-all-users-repository.port";
@@ -16,7 +16,7 @@ export class FindUsersWithPaginationService implements IFindUsersWithPaginationS
     private readonly userRepository: IFindAllUsersRepository
   ) {}
 
-  async listUsers(pageOptionsDto: UserPageOptionsDto): Promise<PageDto<UserResponse>> {
+  async listUsers(pageOptionsDto: UserPageOptionsDto): Promise<PageDto<GetUserResponse>> {
     const { limit, page, name, username } = pageOptionsDto
 
     const filters = this.createFilters(name, username);

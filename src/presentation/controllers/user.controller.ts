@@ -3,7 +3,7 @@ import { CreateUserDto } from "src/app/dtos/user/create-user.dto";
 import { UpdateUserDto } from "src/app/dtos/user/update-user.dto";
 import { UserPageOptionsDto } from "src/app/dtos/user/user-page-options.dto";
 import { ICreateUserService, ICreateUserServiceToken } from "src/app/interfaces/user/create-user-service.interface";
-import { IGetUserByParamService, IGetUserByParamServiceToken, UserResponse } from "src/app/interfaces/user/get-user-by-param-service.interface";
+import { GetUserResponse, IGetUserByParamService, IGetUserByParamServiceToken } from "src/app/interfaces/user/get-user-by-param-service.interface";
 import { IFindUsersWithPaginationService, IFindUsersWithPaginationServiceToken } from "src/app/interfaces/user/list-users-service.interface";
 import { IUpdateUserService, IUpdateUserServiceToken } from "src/app/interfaces/user/update-user-service.interface";
 import { PageDto } from "src/commom/dtos/page.dto";
@@ -29,21 +29,21 @@ export class UserController {
   
   @UseGuards(AccessTokenGuard)
   @Get(':id')
-  async get(@Param('id') userId: string): Promise<UserResponse> {
+  async get(@Param('id') userId: string): Promise<GetUserResponse> {
     return await this.getUserService.execute({ id: userId });
   }
 
   @Get()
   async findUsers(
     @Query() pageOptionsDto: UserPageOptionsDto,
-  ): Promise<PageDto<UserResponse>> {
+  ): Promise<PageDto<GetUserResponse>> {
     return await this.findUsersService.listUsers(pageOptionsDto);
   }
 
   @Patch(':id')
   async update(
     @Param('id') id: string, @Body() updateUserDto: UpdateUserDto
-  ): Promise<UserResponse> {
+  ): Promise<GetUserResponse> {
     return await this.updateUserService.execute(id, updateUserDto);
   }
 }

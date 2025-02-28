@@ -1,11 +1,32 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from '../pg/post.entity';
+import { ICreatePostRepositoryToken } from 'src/app/ports/repositories/post/create-post-repository-interface';
+import { PostRepository } from '../repositories/db-post.repository';
+import { IDeletePostRepositoryToken } from 'src/app/ports/repositories/post/delete-post-repository-interface';
+import { ILoadPostRepositoryToken } from 'src/app/ports/repositories/post/load-post-repository.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post])],
   controllers: [],
-  providers: [],
-  exports: [],
+  providers: [
+    {
+      provide: ICreatePostRepositoryToken,
+      useClass: PostRepository
+    },
+    {
+      provide: ILoadPostRepositoryToken,
+      useClass: PostRepository
+    },
+    {
+      provide: IDeletePostRepositoryToken,
+      useClass: PostRepository
+    }
+  ],
+  exports: [
+    ICreatePostRepositoryToken,
+    IDeletePostRepositoryToken,
+    ILoadPostRepositoryToken
+  ],
 })
 export class PostRepositoryModule {}

@@ -1,7 +1,7 @@
-import { UserResponse } from "../interfaces/user/get-user-by-param-service.interface";
+import { GetUserResponse } from "../interfaces/user/get-user-by-param-service.interface";
 import { UserDatabaseModel } from "../ports/repositories/models/user.model";
 
-export const mapToUserResponseDto = (user: UserDatabaseModel): UserResponse => ({
+export const mapToUserResponseDto = (user: Partial<UserDatabaseModel>): GetUserResponse => ({
   id: user.id,
   name: user.name,
   username: user.username,

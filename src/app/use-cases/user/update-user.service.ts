@@ -1,8 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AlreadyExistsError } from "src/app/errors/already-exists-error";
 import { BadRequestError } from "src/app/errors/bad-request-error";
-import { NotFoundError } from "src/app/errors/not-found-error";
-import { IGetUserByParamService, IGetUserByParamServiceToken, UserResponse } from "src/app/interfaces/user/get-user-by-param-service.interface";
+import { GetUserResponse, IGetUserByParamService, IGetUserByParamServiceToken } from "src/app/interfaces/user/get-user-by-param-service.interface";
 import { IUpdateUserService, UpdateUserParams } from "src/app/interfaces/user/update-user-service.interface";
 import { mapToUserResponseDto } from "src/app/mappers/user.mapper";
 import { ILoadUserByParamRepository, ILoadUserByParamRepositoryToken } from "src/app/ports/repositories/user/load-user-by-param-repository.interface";
@@ -19,7 +18,7 @@ export class UpdateUserService implements IUpdateUserService {
     private readonly loadUserRepo: ILoadUserByParamRepository
   ) {}
 
-  async execute(userId: string, updateUserDto: UpdateUserParams): Promise<UserResponse> {
+  async execute(userId: string, updateUserDto: UpdateUserParams): Promise<GetUserResponse> {
     const user = await this.getUserService.execute({ id: userId })
     
     await this.checkIfEmailOrUsernameExists(user, updateUserDto)
@@ -30,7 +29,7 @@ export class UpdateUserService implements IUpdateUserService {
     return mapToUserResponseDto(updatedUser)
   }
 
-  private async checkIfEmailOrUsernameExists(user: UserResponse, updateUserDto: UpdateUserParams) {
+  private async checkIfEmailOrUsernameExists(user: GetUserResponse, updateUserDto: UpdateUserParams) {
     if (updateUserDto?.email && updateUserDto.email !== user.email) {
       const userEmailAlreadyExists = await this.loadUserRepo.findOne({ 
         email: updateUserDto.email 

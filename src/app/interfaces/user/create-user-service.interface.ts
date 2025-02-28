@@ -1,9 +1,9 @@
 import { CreateUserDto } from "src/app/dtos/user/create-user.dto"
-import { UserDatabaseModel } from "src/app/ports/repositories/models/user.model"
+import { GetUserResponse } from "./get-user-by-param-service.interface"
 
 export interface CreateUserParams extends CreateUserDto {}
 
-export interface CreateUserReponse extends Omit<UserDatabaseModel, 'password'> {}
+export interface CreateUserReponse extends GetUserResponse {}
 
 export interface ICreateUserService {
   createUser: (params: CreateUserParams) => Promise<CreateUserReponse>

@@ -16,4 +16,7 @@ export class Post extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  @Column({ type: 'simple-json', nullable: true, default: [] })
+  likes: string[];
 }
