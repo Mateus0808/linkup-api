@@ -6,6 +6,7 @@ import { PostModule } from './factories/post.module';
 import { CommentModule } from './factories/comment.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { AuthModule } from './factories/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ResponseInterceptor } from './interceptors/response.interceptor';
       synchronize: true,
       logging: true,
     }),
+    AuthModule,
     UserModule,
     PostModule,
     CommentModule

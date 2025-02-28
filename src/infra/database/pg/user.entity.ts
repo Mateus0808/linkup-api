@@ -4,6 +4,7 @@ import { Comment } from './comment.entity';
 import { EnumGender } from 'src/domain/enum/user-gender.enum';
 import { EnumUserStatus } from 'src/domain/enum/user-status.enum';
 import { BaseEntity } from './base.entity';
+import { RefreshToken } from './refresh-token.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -27,7 +28,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 20, nullable: true })
   phone: string;
 
-  @Column({ type: 'enum', enum: EnumGender, default: EnumGender.OTHER })
+  @Column({ type: 'enum', enum: EnumGender })
   gender: EnumGender;
 
   @Column({ type: 'text', array: true, default: [] })
@@ -47,4 +48,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
+  refreshTokens: RefreshToken[];
 }
