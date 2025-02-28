@@ -22,10 +22,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
     if (user.id !== payload.id) {
       throw new UnauthorizedError('Usuário não autorizado');
     }
-
+    
     return {
       id: payload.id,
-      username: payload.username      
+      username: payload.username
     };
   }
 }
