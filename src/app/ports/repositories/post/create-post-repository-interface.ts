@@ -1,4 +1,4 @@
-import { CreatePostParams } from 'src/app/interfaces/post/create-post-service-interface'
+import { CreatePostParams } from 'src/app/interfaces/post/create-post-service.interface'
 import { PostDatabaseModel } from '../models/post.model'
 import { UserDatabaseModel } from '../models/user.model'
 

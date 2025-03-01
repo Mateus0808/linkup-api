@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common'
 import { ILoadUserByParamRepository, ILoadUserByParamRepositoryToken } from 'src/app/ports/repositories/user/load-user-by-param-repository.interface'
 import { NotFoundError } from 'src/app/errors/not-found-error'
-import { CreatePostParams, CreatePostResponse, ICreatePostService } from 'src/app/interfaces/post/create-post-service-interface'
+import { CreatePostParams, CreatePostResponse, ICreatePostService } from 'src/app/interfaces/post/create-post-service.interface'
 import { ICreatePostRepository, ICreatePostRepositoryToken } from 'src/app/ports/repositories/post/create-post-repository-interface'
 import { BadRequestError } from 'src/app/errors/bad-request-error'
 

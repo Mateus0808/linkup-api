@@ -1,7 +1,7 @@
 
 import { Inject, Injectable } from "@nestjs/common"
 import { NotFoundError } from "src/app/errors/not-found-error"
-import { DeletePostServiceResponse, IDeletePostService } from "src/app/interfaces/post/delete-post-service-interface"
+import { DeletePostServiceResponse, IDeletePostService } from "src/app/interfaces/post/delete-post-service.interface"
 import { IDeletePostRepository, IDeletePostRepositoryToken } from "src/app/ports/repositories/post/delete-post-repository-interface"
 
 @Injectable()

@@ -4,14 +4,16 @@ import { Post } from "../pg/post.entity"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { CreatePostRepositoryParams, ICreatePostRepository } from "src/app/ports/repositories/post/create-post-repository-interface"
-import { CreatePostDatabaseModel, PostDatabaseModel } from "src/app/ports/repositories/models/post.model"
+import { PostDatabaseModel } from "src/app/ports/repositories/models/post.model"
 import { ILoadPostRepository } from "src/app/ports/repositories/post/load-post-repository.interface"
+import { ILoadUserPostsRepository, LoadUserPostsRepositoryParams, LoadUserPostsRepositoryResponse } from "src/app/ports/repositories/post/load-user-posts-repository.interface"
 
 @Injectable()
 export class PostRepository implements 
   ICreatePostRepository, 
   IDeletePostRepository, 
-  ILoadPostRepository
+  ILoadPostRepository,
+  ILoadUserPostsRepository
 {
   constructor(
     @InjectRepository(Post)
@@ -38,6 +40,23 @@ export class PostRepository implements
     if (!post) return null
 
     return post
+  }
+
+  async loadUserPosts (
+    params: LoadUserPostsRepositoryParams
+  ): Promise<LoadUserPostsRepositoryResponse> {
+    const { userId, page, limit } = params;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await this.postRepository.findAndCount({
+      where: { user: { id: userId } },
+      skip,
+      take: limit,
+      order: { createdAt: "DESC" },
+      relations: ["user", "comments"],
+    });
+
+    return { data, total };
   }
   
   async delete(postId: string): Promise<boolean | null> {
