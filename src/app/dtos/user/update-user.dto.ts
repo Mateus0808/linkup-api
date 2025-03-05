@@ -22,8 +22,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   phone?: string;
 
-  @IsEnum(EnumGender, { message: 'O gênero deve ser MALE, FEMALE ou OTHER' })
+  @IsIn([EnumGender.FEMALE, EnumGender.MALE, EnumGender.OTHER], { message: 'O gênero deve ser MALE, FEMALE ou OTHER' })
   @IsNotEmpty({ message: 'O gênero é obrigatório' })
   @IsOptional()
   gender: EnumGender;
+
+  followers: Array<string>
+
+  followings: Array<string>
 }

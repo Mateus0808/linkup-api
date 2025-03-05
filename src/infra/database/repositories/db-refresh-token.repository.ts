@@ -29,9 +29,8 @@ export class RefreshTokenRepository implements
     return await this.save(token)
   }
   
-  async save({ user, ...rest }: RefreshTokenDatabaseModel): Promise<RefreshTokenDatabaseModel> {
+  async save({ ...rest }: RefreshTokenDatabaseModel): Promise<RefreshTokenDatabaseModel> {
     const savedToken = await this.tokenRepository.save({
-      user: { id: user.id },
       ...rest
     })
 

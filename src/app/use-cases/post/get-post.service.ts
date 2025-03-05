@@ -1,9 +1,10 @@
-import { Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { NotFoundError } from "src/app/errors/not-found-error";
 import { GetPostResponse, IGetPostService } from "src/app/interfaces/post/get-post-service.interface";
 import { mapToPostResponseDto } from "src/app/mappers/post.mapper";
 import { ILoadPostRepository, ILoadPostRepositoryToken } from "src/app/ports/repositories/post/load-post-repository.interface";
 
+@Injectable()
 export class GetPostService implements IGetPostService {
   constructor(
     @Inject(ILoadPostRepositoryToken)
@@ -13,7 +14,7 @@ export class GetPostService implements IGetPostService {
   async execute (postId: string): Promise<GetPostResponse> {
     const post = await this.loadPostRepo.findOne(postId)
     if (!post) throw new NotFoundError('Postagem não encontrada')
-
+    console.log("my post", post)
     return mapToPostResponseDto(post)
   }
 }

@@ -4,6 +4,7 @@ export interface CreatePostParams {
   userId: string
   title: string
   description: string
+  imageUrl?: string
 }
 
 export interface CreatePostResponse extends PostDatabaseModel {}

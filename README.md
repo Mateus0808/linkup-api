@@ -1,73 +1,129 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API NestJS - Relatório de Posts
+Esta API foi desenvolvida para gerenciar posts e gerar relatórios com informações como título, número de comentários, visualizações, curtidas e não curtidas. Abaixo estão detalhes sobre a stack utilizada, as escolhas tecnológicas e como configurar o projeto.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 🛠️ Stack Utilizada
+Linguagem de Programação
+-Node.js (v23.7.0)
+  Escolhido por sua ampla adoção, suporte a operações assíncronas e grande ecossistema de pacotes.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- TypeScript (v5.x)
+  Adotado para adicionar tipagem estática ao JavaScript, melhorando a segurança e a manutenção do código.
 
-## Description
+Framework
+- NestJS (v10.x)
+  Escolhido por ser um framework progressivo e escalável, que combina elementos de programação orientada a objetos, programação funcional e programação reativa. Ele também oferece suporte nativo ao TypeScript e uma arquitetura modular.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Banco de Dados
+- PostgreSQL (v17.x)
+  Escolhido por ser um banco de dados relacional robusto, com suporte a transações ACID e ampla adoção em aplicações críticas.
 
-## Installation
+- TypeORM (v0.3.x)
+  Utilizado como ORM (Object-Relational Mapping) para facilitar a interação com o banco de dados e mapear entidades para tabelas.
 
-```bash
-$ npm install
+Autenticação e Autorização
+- @nestjs/passport (v11.x)  
+  Utilizado para implementar autenticação via JWT (JSON Web Tokens).
+
+- argon (v0.41.x)
+  Utilizado para criptografar senhas antes de armazená-las no banco de dados.
+
+Validação de Dados
+- class-validator (v0.14.x)
+  Utilizado para validar dados de entrada com decorators.
+
+- class-transformer (v0.5.x)
+  Utilizado para transformar objetos (por exemplo, de DTOs para entidades).
+
+
+Outros Pacotes
+- multer (v1.4.x)
+  Utilizado para manipular uploads de arquivos (por exemplo, imagens para posts).
+
+- serve-static (v1.15.x)
+  Utilizado para servir arquivos estáticos (por exemplo, imagens armazenadas no servidor).
+
+## 🚀 Por que NestJS?
+- O NestJS foi escolhido por ser um framework moderno e altamente escalável, que combina as melhores práticas de desenvolvimento de software. Ele oferece:
+
+- Arquitetura Modular: Facilita a organização do código em módulos independentes.
+- Suporte a TypeScript: Melhora a segurança e a manutenção do código com tipagem estática.
+- Integração com ORMs: Facilita a interação com bancos de dados.
+- Documentação Automática: Com o Swagger, é fácil gerar e manter a documentação da API.
+- Ecossistema Robustos: Integração com ferramentas populares como Passport, TypeORM e Jest.
+
+## 🗃️ Banco de Dados
+- PostgreSQL
+Escolha: PostgreSQL foi escolhido por ser um banco de dados relacional robusto, com suporte a transações ACID e ampla adoção em aplicações críticas.
+
+Configuração:
+```
+Host: localhost
+Porta: 5432
+Usuário: postgres
+Senha: Definida no arquivo .env
+Banco de Dados: posts_db
 ```
 
-## Running the app
+- TypeORM
+Escolha: TypeORM foi escolhido por ser um ORM que suporta TypeScript e facilita o mapeamento de entidades para tabelas no banco de dados.
 
-```bash
-# development
-$ npm run start
+Configuração:
+As entidades são definidas como classes TypeScript e mapeadas automaticamente para tabelas no banco de dados.
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
+## 📦 Pacotes Adicionais
+Dependências Principais
+@nestjs/core: Core do NestJS.
+@nestjs/platform-express: Integração com o Express.
+@nestjs/jwt: Suporte a JWT para autenticação.
+@nestjs/passport: Integração com Passport.js.
+@nestjs/swagger: Geração de documentação automática da API.
+typeorm: ORM para interação com o banco de dados.
+pg: Driver do PostgreSQL para TypeORM.
+
+
+## Funcionalidades implementadas
+- Autenticação (accessToken, refreshToken)
+- CRUD Post
+- CRUD Comment
+- Relatório de postagem (titulo, numero de comentarios, likes)
+- A postagem tem a possibilidade de adicionar uma imagem
+- A postagem tem um contador de curtidas 
+
+- Validações de segurança 
+  1. Usuário só pode editar ou excluir o seu próprio post
+  2. Usuário ou responsavel pelo post pode excluir o post
+  3. Apenas o próprio usuário pode editar ou excluir as postagens
+  4. Usuário da postagem também pode remover o comentário
+
+
+
+## 🛠️ Configuração do Projeto
+Pré-requisitos
+- Node.js (v18.x ou superior)
+- PostgreSQL (v15.x ou superior)
+- npm ou yarn
+
+1. Clone o repositório:
+```
+git clone https://github.com/seu-usuario/nestjs-posts-api.git
+cd nestjs-posts-api
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+2. Instale as dependências:
+```
+npm install
 ```
 
-## Support
+3. Configure o arquivo .env:
+```
+Modificar as variaveis na pasta src/main/app.module
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+JWT_ACCESS_SECRET=chave_secreta
+JWT_REFRESH_SECRET=sua_chave_secreta
+```
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+4. Inicie o servidor:
+```
+npm run start
+```

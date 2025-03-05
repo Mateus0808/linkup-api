@@ -1,3 +1,4 @@
+import { EnumGender } from "../enum/user-gender.enum"
 import { EnumUserStatus } from "../enum/user-status.enum"
 
 export interface UserEntity {
@@ -7,7 +8,7 @@ export interface UserEntity {
   birthDate: Date
   maritalStatus: string
   phone: string
-  gender: 'MALE' | 'FEMALE' | 'OTHER'
+  gender: EnumGender
   followers: Array<string>
   followings: Array<string>
   password: string

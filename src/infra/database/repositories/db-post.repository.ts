@@ -7,13 +7,17 @@ import { CreatePostRepositoryParams, ICreatePostRepository } from "src/app/ports
 import { PostDatabaseModel } from "src/app/ports/repositories/models/post.model"
 import { ILoadPostRepository } from "src/app/ports/repositories/post/load-post-repository.interface"
 import { ILoadUserPostsRepository, LoadUserPostsRepositoryParams, LoadUserPostsRepositoryResponse } from "src/app/ports/repositories/post/load-user-posts-repository.interface"
+import { IUpdatePostRepository, UpdatePostRepoParams } from "src/app/ports/repositories/post/update-user-repository.port"
+import { ILoadUserPostsWithourPagination } from "src/app/ports/repositories/post/load-user-posts-without-pagination.interface"
 
 @Injectable()
 export class PostRepository implements 
   ICreatePostRepository, 
   IDeletePostRepository, 
   ILoadPostRepository,
-  ILoadUserPostsRepository
+  ILoadUserPostsRepository,
+  IUpdatePostRepository,
+  ILoadUserPostsWithourPagination
 {
   constructor(
     @InjectRepository(Post)
@@ -29,17 +33,25 @@ export class PostRepository implements
 
     const savedPost = await this.postRepository.save(post)
     if (!savedPost) return null
-    console.log("savedpOsr", savedPost)
+
     return savedPost
   }
   
   async findOne (postId: string): Promise<PostDatabaseModel | null> {
     const post = await this.postRepository.findOne({ 
-      where: { id: postId }, relations: ['user']
+      where: { id: postId }, relations: ['user', 'comments', 'comments.user']
     })
     if (!post) return null
 
     return post
+  }
+
+  async findUserPosts(userId: string): Promise<PostDatabaseModel[]> {
+    const posts = await this.postRepository.find({
+      where: { user: { id: userId }}, relations: ['comments', 'user']
+    })
+
+    return posts
   }
 
   async loadUserPosts (
@@ -53,15 +65,22 @@ export class PostRepository implements
       skip,
       take: limit,
       order: { createdAt: "DESC" },
-      relations: ["user", "comments"],
+      relations: ["user", "comments", "comments.user", "comments.post"],
     });
 
     return { data, total };
   }
+
+  async update (postId: string, data: UpdatePostRepoParams): Promise<PostDatabaseModel | null> {
+    const post = await this.postRepository.update(postId, data)
+    if(!post) return null
+
+    return await this.findOne(postId)
+  }
   
   async delete(postId: string): Promise<boolean | null> {
-    const user = await this.postRepository.delete(postId)
-    if (user.affected === 0) return null
+    const post = await this.postRepository.delete(postId)
+    if (post.affected === 0) return null
 
     return true
   }

@@ -28,13 +28,13 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 20, nullable: true })
   phone: string;
 
-  @Column({ type: 'enum', enum: EnumGender })
+  @Column({ type: 'enum', enum: EnumGender, nullable: true })
   gender: EnumGender;
 
-  @Column({ type: 'text', array: true, default: [] })
+  @Column({ type: 'uuid', array: true, default: [] })
   followers: string[];
 
-  @Column({ type: 'text', array: true, default: [] })
+  @Column({ type: 'uuid', array: true, default: [] })
   followings: string[];
 
   @Column({ type: 'varchar', length: 255 })

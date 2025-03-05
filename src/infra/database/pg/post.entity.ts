@@ -14,6 +14,9 @@ export class Post extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  imageUrl: string;
+
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 

@@ -6,6 +6,8 @@ import { PostRepository } from '../repositories/db-post.repository';
 import { IDeletePostRepositoryToken } from 'src/app/ports/repositories/post/delete-post-repository-interface';
 import { ILoadPostRepositoryToken } from 'src/app/ports/repositories/post/load-post-repository.interface';
 import { ILoadUserPostsRepositoryToken } from 'src/app/ports/repositories/post/load-user-posts-repository.interface';
+import { IUpdatePostRepositoryToken } from 'src/app/ports/repositories/post/update-user-repository.port';
+import { ILoadUserPostsWithourPaginationToken } from 'src/app/ports/repositories/post/load-user-posts-without-pagination.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post])],
@@ -24,7 +26,15 @@ import { ILoadUserPostsRepositoryToken } from 'src/app/ports/repositories/post/l
       useClass: PostRepository
     },
     {
+      provide: IUpdatePostRepositoryToken,
+      useClass: PostRepository
+    },
+    {
       provide: IDeletePostRepositoryToken,
+      useClass: PostRepository
+    },
+    {
+      provide: ILoadUserPostsWithourPaginationToken,
       useClass: PostRepository
     }
   ],
@@ -32,7 +42,9 @@ import { ILoadUserPostsRepositoryToken } from 'src/app/ports/repositories/post/l
     ICreatePostRepositoryToken,
     ILoadUserPostsRepositoryToken,
     IDeletePostRepositoryToken,
-    ILoadPostRepositoryToken
+    IUpdatePostRepositoryToken,
+    ILoadPostRepositoryToken,
+    ILoadUserPostsWithourPaginationToken
   ],
 })
 export class PostRepositoryModule {}

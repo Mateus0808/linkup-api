@@ -7,11 +7,11 @@ export class CreatePostDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(5, 100)
+  @Length(2, 100)
   title: string
 
   @IsString()
   @IsNotEmpty()
-  @Length(10, 500)
+  @Length(2, 500)
   description: string
 }

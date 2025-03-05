@@ -4,7 +4,7 @@ export interface DeletePostServiceResponse {
 }
 
 export interface IDeletePostService {
-  execute: (id: string) => Promise<DeletePostServiceResponse>
+  execute: (userId: string, postId: string) => Promise<DeletePostServiceResponse>
 }
 
 export const IDeletePostServiceToken = 'IDeletePostServiceToken'

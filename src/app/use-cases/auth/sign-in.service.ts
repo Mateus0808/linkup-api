@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { NotFoundError } from "src/app/errors/not-found-error";
 import { UnauthorizedError } from "src/app/errors/unauthorized-error";
 import { ISignInService, SignInParams, SignInResponse } from "src/app/interfaces/auth/sign-in-service.interface";
 import { ICreateRefreshTokenService, ICreateRefreshTokenServiceToken } from "src/app/interfaces/refresh-token/create-refresh-token-service.interface";
@@ -21,25 +22,30 @@ export class SignInService implements ISignInService {
 
   async signIn(signInDto: SignInParams): Promise<SignInResponse> {
     const { email, password } = signInDto;
+ 
     const user = await this.loadUserRepo.findOne({ email });
+    if (!user) 
+      throw new NotFoundError('Credenciais inválidas. Verifique seu email e senha')
 
     const isPasswordValid = await this.argon.compare(password, user.password);
-    if (!isPasswordValid) throw new UnauthorizedError(
+    if (!isPasswordValid) throw new NotFoundError(
       'Credenciais inválidas. Verifique seu email e senha'
     );
 
-    const payload = { id: user.id, username: user.username };
+    const payload = { sub: user.id, username: user.username };
     const tokens = await this.jwtService.generateTokens(payload);
     
-    await this.createRefreshToken.createRefreshToken({
+    const refreshTokenData = await this.createRefreshToken.createRefreshToken({
       userId: user.id,
       refreshToken: tokens.refreshToken,
       expiresAt: tokens.expiresAt,
     });
 
     return {
+      userId: user.id,
       accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken
+      refreshToken: tokens.refreshToken,
+      tokenId: refreshTokenData.id,
     };
   }
 }

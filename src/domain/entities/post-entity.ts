@@ -4,4 +4,6 @@ export interface PostEntity {
   user: UserEntity
   title: string
   description: string
+  imageUrl: string
+  likes: string[]
 }

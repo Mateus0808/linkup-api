@@ -15,10 +15,12 @@ export class RevokeRefreshTokenService implements IRevokeRefreshTokenService {
   ) {}
 
   async revokeToken(tokenId: string): Promise<void> {
+    console.log('tokenId', tokenId)
     const token = await this.getRefreshTokenService.findOne({ id: tokenId });
     if (!token) throw new NotFoundError('Token não encontrado')
     
     token.revoked = true;
-    await this.refreshTokenRepository.save(token);
+    console.log("my token", token)
+    const myT = await this.refreshTokenRepository.save(token);
   }
 }

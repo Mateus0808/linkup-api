@@ -1,6 +1,5 @@
-import { UserEntity } from "./user-entity"
-
 export interface CommentEntity {
-  user: UserEntity
+  user: string
+  post: string
   description: string
 }
