@@ -25,7 +25,6 @@ export class UnfollowUserService implements IUnfollowUserService {
     const currentUser = await this.getUserService.execute({ id: currentUserId })
     const userToUnfollow = await this.getUserService.execute({ id: userId });
 
-    // 4. Verifica se o usuário atual segue o outro usuário
     if (!currentUser.followings || !currentUser.followings.includes(userId)) {
       return {
         message: 'Você não segue este usuário.',
@@ -33,7 +32,6 @@ export class UnfollowUserService implements IUnfollowUserService {
       };
     }
 
-    // Remove o userId da lista de "seguindo" do usuário atual
     const updatedFollowings = currentUser.followings.filter(
       (id) => id !== userId,
     );
@@ -42,7 +40,6 @@ export class UnfollowUserService implements IUnfollowUserService {
       followings: updatedFollowings,
     });
 
-    // Remove o currentUserId da lista de "seguidores" do usuário que está sendo deixado de seguir
     const updatedFollowers = userToUnfollow.followers
       ? userToUnfollow.followers.filter((id) => id !== currentUserId)
       : [];

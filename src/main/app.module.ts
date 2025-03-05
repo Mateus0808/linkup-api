@@ -18,15 +18,15 @@ import { join } from 'path';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'minhasenhae?08',
+      password: 'root?08',
       database: 'linkup-db',
       autoLoadEntities: true,
       synchronize: true,
       logging: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'uploads'), // Caminho para a pasta de uploads
-      serveRoot: '/uploads', // Rota base para acessar os arquivos
+      rootPath: join(__dirname, '..', '..', 'uploads'),
+      serveRoot: '/uploads',
     }),
     AuthModule,
     UserModule,
